@@ -1,24 +1,12 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * 
- * Generated with the TypeScript template
- * https://github.com/emin93/react-native-template-typescript
- * 
- * @format
- */
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { graphql } from 'react-relay';
 import { environment, QueryRenderer } from './relay';
+import { default as Loading } from './components/Loading';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu'
-});
-
+/**
+ * Query Definitions
+ */
 const query = graphql`
   query AppQuery {
     allCinemaDetails(before: "2019-10-04", after: "2018-01-01") {
@@ -31,39 +19,35 @@ const query = graphql`
       }
     }
   }
-`
+`;
 
+/**
+ * Interface Definitions
+ */
 interface Props {}
-class MovieApplication extends Component<Props> {
+
+/**
+ * Component Definition
+ */
+export default class extends Component<Props> {
   render() {
     return (
       <QueryRenderer
         environment={environment}
         query={query}
         variables={{}}
-        render={() => {
+        LoadingComponent={<Loading />}
+        render={({ props, error, retry }) => {
+          console.log('QueryRenderer.render:', { props, error, retry });
           return(
             <View style={styles.container}>
-              <Text style={styles.welcome}>Welcome to React Native!</Text>
-              <Text style={styles.instructions}>To get started, edit App.tsx</Text>
-              <Text style={styles.instructions}>{instructions}</Text>
+              <Text style={styles.welcome}>Welcome to React Offline Native Example!</Text>
+              <Text style={styles.instructions}>{JSON.stringify({ props, error, retry })}</Text>
             </View>
           )
         }}
       />
     )
-  }
-}
-
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.tsx</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
   }
 }
 

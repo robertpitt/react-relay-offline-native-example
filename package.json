@@ -5,7 +5,7 @@
   "scripts": {
     "cli": "node node_modules/react-native/local-cli/cli.js",
     "start": "npm run cli -- start",
-    "run-android": "npm run cli -- run -android",
+    "run-android": "npm run cli -- run-android",
     "relay:compile": "relay-compiler --src ./src --schema ./schema.graphql --language typescript",
     "relay:sync": "get-graphql-schema https://etmdb.com/graphql > ./schema.graphql",
     "test": "jest"

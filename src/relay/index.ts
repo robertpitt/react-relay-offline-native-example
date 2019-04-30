@@ -1,12 +1,13 @@
 import { OfflineStore, Store, Environment, RecordSource } from 'react-relay-offline';
 import { Network, FetchFunction } from 'relay-runtime';
-export { graphql } from 'react-relay';
 export { QueryRenderer } from 'react-relay-offline';
+export { graphql } from 'react-relay';
 
 /**
  * Define fetch query
  */
 const fetchQuery: FetchFunction = (operation, variables) => {
+  console.log('fetching', operation, variables);
   return fetch('https://etmdb.com/graphql', {
     method: 'POST',
     headers: {
@@ -37,4 +38,4 @@ export const store = new Store(storeOffline, source);
 /**
  * Environment
  */
-export const environment = new Environment({ network, store, dataFrom: "CACHE_FIRST" }, storeOffline);
+export const environment = new Environment({ network, store }, storeOffline);
