@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { graphql } from 'react-relay';
-import { environment, QueryRenderer } from './relay';
+import { environment, QueryRenderer, store, reduxOfflineStore } from './relay';
 import { default as Loading } from './components/Loading';
+import Cinimas from './pages/Cinimas';
+import { RenderProps } from 'react-relay-offline/lib/RelayOfflineTypes';
+import { AppQueryResponse } from './__generated__/AppQuery.graphql';
 
 /**
  * Query Definitions
  */
 const query = graphql`
-  query AppQuery {
-    allCinemaDetails(before: "2019-10-04", after: "2018-01-01") {
-      edges {
-        node {
-          slug
-          hallName
-          createdDate
-        }
-      }
+  query AppQuery ($before: String! $after: String!) {
+    allCinemaDetails(before: $before, after: $after) {
+      ...Cinimas_entries
     }
   }
 `;
@@ -33,16 +30,15 @@ export default class extends Component<Props> {
   render() {
     return (
       <QueryRenderer
+        LoadingComponent={<Loading />}
         environment={environment}
         query={query}
-        variables={{}}
-        LoadingComponent={<Loading />}
-        render={({ props, error, retry }) => {
-          console.log('QueryRenderer.render:', { props, error, retry });
-          return(
+        variables={{ after: "2018-10-04", before: "2018-10-04" }}
+        dataFrom={"CACHE_FIRST"}
+        render={({ props, cached, error, retry }: { props: AppQueryResponse } & RenderProps) => {
+          return (
             <View style={styles.container}>
-              <Text style={styles.welcome}>Welcome to React Offline Native Example!</Text>
-              <Text style={styles.instructions}>{JSON.stringify({ props, error, retry })}</Text>
+              {props && <Cinimas entries={props.allCinemaDetails} />}
             </View>
           )
         }}

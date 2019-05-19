@@ -2,24 +2,24 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { Cinimas_entries$ref } from "./Cinimas_entries.graphql";
-export type AppQueryVariables = {
+export type CinimasRefetchQueryVariables = {
     readonly before: string;
     readonly after: string;
 };
-export type AppQueryResponse = {
+export type CinimasRefetchQueryResponse = {
     readonly allCinemaDetails: {
         readonly " $fragmentRefs": Cinimas_entries$ref;
     } | null;
 };
-export type AppQuery = {
-    readonly response: AppQueryResponse;
-    readonly variables: AppQueryVariables;
+export type CinimasRefetchQuery = {
+    readonly response: CinimasRefetchQueryResponse;
+    readonly variables: CinimasRefetchQueryVariables;
 };
 
 
 
 /*
-query AppQuery(
+query CinimasRefetchQuery(
   $before: String!
   $after: String!
 ) {
@@ -71,7 +71,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "AppQuery",
+    "name": "CinimasRefetchQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -96,7 +96,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "AppQuery",
+    "name": "CinimasRefetchQuery",
     "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
@@ -164,12 +164,12 @@ return {
   },
   "params": {
     "operationKind": "query",
-    "name": "AppQuery",
+    "name": "CinimasRefetchQuery",
     "id": null,
-    "text": "query AppQuery(\n  $before: String!\n  $after: String!\n) {\n  allCinemaDetails(before: $before, after: $after) {\n    ...Cinimas_entries\n  }\n}\n\nfragment Cinimas_entries on CinemaDetailNodeConnection {\n  edges {\n    node {\n      id\n      hallName\n      slug\n      numberOfSeats\n    }\n  }\n}\n",
+    "text": "query CinimasRefetchQuery(\n  $before: String!\n  $after: String!\n) {\n  allCinemaDetails(before: $before, after: $after) {\n    ...Cinimas_entries\n  }\n}\n\nfragment Cinimas_entries on CinemaDetailNodeConnection {\n  edges {\n    node {\n      id\n      hallName\n      slug\n      numberOfSeats\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
-(node as any).hash = '9292db905bfc11aa28748f526dd36bfc';
+(node as any).hash = 'ce22859afba1dd7273082fa8538f623e';
 export default node;
